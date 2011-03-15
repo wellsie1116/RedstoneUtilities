@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.tal.librarytemplate;
+package me.kevinwells.redstoneutilities;
 
 import org.tal.redstonechips.RedstoneChips;
 import org.tal.redstonechips.circuit.CircuitLibrary;
@@ -12,12 +12,11 @@ import org.tal.redstonechips.circuit.CircuitLibrary;
  *
  * @author Tal Eisenberg
  */
-public class LibraryTemplate extends CircuitLibrary {
+public class RedstoneUtilities extends CircuitLibrary {
     private RedstoneChips redstoneChips;
 
-    @Override
     public Class[] getCircuitClasses() {
-        return new Class[] { test.class };
+        return new Class[] { deathdoor.class };
     }
 
     @Override

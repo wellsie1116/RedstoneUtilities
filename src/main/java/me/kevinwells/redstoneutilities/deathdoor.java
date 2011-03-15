@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.tal.librarytemplate;
+package me.kevinwells.redstoneutilities;
 
 import org.bukkit.command.CommandSender;
 import org.tal.redstonechips.circuit.Circuit;
@@ -12,7 +12,7 @@ import org.tal.redstonechips.circuit.Circuit;
  *
  * @author Tal Eisenberg
  */
-public class test extends Circuit {
+public class deathdoor extends Circuit {
 
     @Override
     public void inputChange(int index, boolean state) {
