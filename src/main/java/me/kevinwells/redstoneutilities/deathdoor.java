@@ -23,6 +23,16 @@ public class deathdoor extends Circuit {
 	private boolean codeCorrect = true;
 	private boolean failed = false;
 	
+	private static int INPUT_PRESSURE = 0;
+	//private static int INPUT_BTN1 = 1;
+	//private static int INPUT_BTN2 = 2;
+	//private static int INPUT_BTN3 = 3;
+	
+	private static int OUTPUT_FLOOR = 0;
+	private static int OUTPUT_DOOR = 1;
+	private static int OUTPUT_FAILED = 2;
+	
+	
 	private void sendDelayedOutput(final int index, final boolean state, long millis) {
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
@@ -47,18 +57,18 @@ public class deathdoor extends Circuit {
     	// failed
     	// floor
     	
-    	if (index == 0) {
+    	if (index == INPUT_PRESSURE) {
     		if (state) {
     			if (hasDebuggers()) debug("Manually opening door");
-    			sendOutput(0, true);
+    			sendOutput(OUTPUT_DOOR, true);
     			if (failed) {
     				if (hasDebuggers()) debug("Clearing failed state");
     				failed = false;
-    				sendOutput(1, false);
+    				sendOutput(OUTPUT_FAILED, false);
     			}
     		} else {
     			if (hasDebuggers()) debug("Closing door in 1 second");
-    			sendDelayedOutput(0, false, 1000);
+    			sendDelayedOutput(OUTPUT_DOOR, false, 1000);
     		}
     	} else {
     		if (state) {
@@ -69,18 +79,18 @@ public class deathdoor extends Circuit {
     				if (codeCorrect) {
     					if (failed) {
     						failed = false;
-    						sendOutput(1, false);
+    						sendOutput(OUTPUT_FAILED, false);
     					}
-    					sendOutput(0, true);
+    					sendOutput(OUTPUT_DOOR, true);
     					if (hasDebuggers()) debug("Code correct: opening door");
     					
     				} else if (!failed) {
-    					sendOutput(1, true);
+    					sendOutput(OUTPUT_FAILED, true);
     					failed = true;
     					if (hasDebuggers()) debug("Code incorrect: try one more time");
     				} else {
-    					sendOutput(2, true);
-    					sendDelayedOutput(2, false, 2000);
+    					sendOutput(OUTPUT_FLOOR, true);
+    					sendDelayedOutput(OUTPUT_FLOOR, false, 2000);
     					if (hasDebuggers()) debug("Code incorrect: goodbye");
     				}
     				codeIndex = 0;
