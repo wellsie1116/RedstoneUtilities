@@ -51,6 +51,11 @@ public class deathdoor extends Circuit {
     		if (state) {
     			if (hasDebuggers()) debug("Manually opening door");
     			sendOutput(0, true);
+    			if (failed) {
+    				if (hasDebuggers()) debug("Clearing failed state");
+    				failed = false;
+    				sendOutput(1, false);
+    			}
     		} else {
     			if (hasDebuggers()) debug("Closing door in 1 second");
     			sendDelayedOutput(0, false, 1000);
@@ -75,7 +80,7 @@ public class deathdoor extends Circuit {
     					if (hasDebuggers()) debug("Code incorrect: try one more time");
     				} else {
     					sendOutput(2, true);
-    					sendDelayedOutput(2, false, 500);
+    					sendDelayedOutput(2, false, 2000);
     					failed = false;
     					if (hasDebuggers()) debug("Code incorrect: goodbye");
     				}
