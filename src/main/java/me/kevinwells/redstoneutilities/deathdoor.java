@@ -19,7 +19,7 @@ import org.tal.redstonechips.circuit.Circuit;
 public class deathdoor extends Circuit {
 
 	private int code[];
-	private int index = 0;
+	private int codeIndex = 0;
 	private boolean codeCorrect = true;
 	private boolean failed = false;
 	
@@ -28,7 +28,8 @@ public class deathdoor extends Circuit {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				sendOutput(index, state);
+				if (!inputBits.get(0))
+					sendOutput(index, state);
 			}
 		}, millis);
 	}
@@ -56,10 +57,10 @@ public class deathdoor extends Circuit {
     		}
     	} else {
     		if (state) {
-    			if (code[index] != index)
+    			if (code[codeIndex] != index)
     				codeCorrect = false;
-    			index++;
-    			if (index == code.length) {
+    			codeIndex++;
+    			if (codeIndex == code.length) {
     				if (codeCorrect) {
     					if (failed) {
     						failed = false;
@@ -78,7 +79,7 @@ public class deathdoor extends Circuit {
     					failed = false;
     					if (hasDebuggers()) debug("Code incorrect: goodbye");
     				}
-    				index = 0;
+    				codeIndex = 0;
     				codeCorrect = true;
     			}
     		}
