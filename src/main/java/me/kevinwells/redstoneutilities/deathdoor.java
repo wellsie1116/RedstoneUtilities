@@ -81,7 +81,6 @@ public class deathdoor extends Circuit {
     				} else {
     					sendOutput(2, true);
     					sendDelayedOutput(2, false, 2000);
-    					failed = false;
     					if (hasDebuggers()) debug("Code incorrect: goodbye");
     				}
     				codeIndex = 0;
